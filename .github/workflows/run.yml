@@ -7,7 +7,7 @@ jobs:
   get_tag:
     name: Get tag name
     outputs:
-      tagged: ${{ steps.get_tag.outputs.tag }}
+      tag: ${{ steps.get_tag.outputs.tag }}
     runs-on: ubuntu-latest
     steps:
       - name: Get the tag name
@@ -20,4 +20,6 @@ jobs:
     needs: get_tag
     steps:
     - name: Print tag
-      run: ./dev/run.sh ${{needs.job1.outputs.output1}}
+      env:
+        ARG1: ${{needs.get_tag.outputs.tag}}
+      run: ./dev/run.sh
